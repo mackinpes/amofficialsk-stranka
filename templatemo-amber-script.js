@@ -182,9 +182,12 @@ class PhotoCoverflow {
 
       // Update indicators
       this.indicators.forEach((indicator, index) => {
-         indicator.classList.toggle('active', index === this.currentIndex);
-      });
-   }
+   indicator.classList.toggle('active', index === this.currentIndex);
+});
+
+this.updateVideos();}
+
+
 
    toggleAutoPlay() {
       const playPauseBtn = document.getElementById('playPauseBtn');
@@ -226,10 +229,31 @@ class PhotoCoverflow {
    }
 
    goTo(index) {
-      this.currentIndex = index;
-      this.updateCoverflow();
+   this.currentIndex = index;
+   this.updateCoverflow();
+}
+
+updateVideos() {
+
+   const videos = document.querySelectorAll('.coverflow-item video');
+
+   videos.forEach(video => {
+      video.pause();
+   });
+
+   const activeItem = this.items[this.currentIndex];
+
+   if (!activeItem) return;
+
+   const activeVideo = activeItem.querySelector('video');
+
+   if (activeVideo) {
+      activeVideo.play().catch(() => {});
    }
 }
+
+}
+
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
